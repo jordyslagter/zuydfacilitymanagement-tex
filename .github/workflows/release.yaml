@@ -6,6 +6,7 @@ on:
       - "main"
     paths:
       - "zuydfacilitymanagement/**"
+  workflow_dispatch:
 
 permissions:
   contents: write # Needed to create release
