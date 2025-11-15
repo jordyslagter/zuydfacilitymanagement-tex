@@ -13,29 +13,29 @@ permissions:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Get timestamp
+      - name: Generate timestamp
         id: ts
-        run: echo "timestamp=$(date +'%Y%m%d%H%M%S')" >> "$GITHUB_OUTPUT"
+        run: echo "value=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
 
       - name: Zip directory
+        id: zip
         run: |
           DIR="zuydfacilitymanagement"
-          ZIP_NAME="${DIR}-${{ steps.ts.outputs.timestamp }}.zip"
+          ZIP_NAME="${DIR}-${{ steps.ts.outputs.value }}.zip"
           zip -r "$ZIP_NAME" "$DIR"
-          echo "zip_name=$ZIP_NAME" >> $GITHUB_OUTPUT
+          echo "name=$ZIP_NAME" >> $GITHUB_OUTPUT
 
-      # Modern method using GitHub CLI
-      - name: Create release
+      - name: Create Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ steps.ts.outputs.timestamp }}" \
-            "${{ steps.ts.outputs.zip_name }}" \
-            --title "Release ${{ steps.ts.outputs.timestamp }}" \
+          gh release create "${{ steps.ts.outputs.value }}" \
+            "${{ steps.zip.outputs.name }}" \
+            --title "Release ${{ steps.ts.outputs.value }}" \
             --notes "Automated release"
