@@ -104,7 +104,7 @@ Now your entire document should look like this:
 
 ## Giving it a title
 
-The zuydfacilitymanagement $ \LaTeX $ class exposes three types of chapters:
+The zuydfacilitymanagement LaTeX class exposes three types of chapters:
 
 - `\chapter`
 - `\unnumberedchapter`

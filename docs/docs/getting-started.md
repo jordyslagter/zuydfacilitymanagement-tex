@@ -5,11 +5,11 @@ sidebar_position: 1
 # Getting started
 
 This document details the needed prerequisites and steps needed to set up a new
-$ \LaTeX $ document using the zuydfacilitymanagement class.
+LaTeX document using the zuydfacilitymanagement class.
 
 ## Prerequisites
 
-- Either a local or remote (Overleaf) environment to run $ \LaTeX $ in.
+- Either a local or remote (Overleaf) environment to run LaTeX in.
 - The Zuyd style font 'Avenir Next LT Pro' regular, italic and bold installed
   on your system and available.
 
