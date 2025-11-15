@@ -5,7 +5,7 @@ on:
     branches:
       - "main"
     paths:
-      - "zuydfacilitymanagement"
+      - "zuydfacilitymanagement/**"
 
 permissions:
   contents: write # Needed to create release
