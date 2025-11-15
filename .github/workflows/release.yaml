@@ -9,43 +9,33 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # Needed to create release
+  contents: write # REQUIRED for creating releases
 
 jobs:
   release:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set timestamp
-        id: timestamp
-        run: |
-          TIMESTAMP=$(date +'%Y%m%d%H%M%S')
-          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+      - name: Get timestamp
+        id: ts
+        run: echo "timestamp=$(date +'%Y%m%d%H%M%S')" >> "$GITHUB_OUTPUT"
 
-      - name: Zip zuydfacilitymanagement
+      - name: Zip directory
         run: |
           DIR="zuydfacilitymanagement"
-          ZIP_NAME="${DIR}-${{ steps.timestamp.outputs.timestamp }}.zip"
+          ZIP_NAME="${DIR}-${{ steps.ts.outputs.timestamp }}.zip"
           zip -r "$ZIP_NAME" "$DIR"
+          echo "zip_name=$ZIP_NAME" >> $GITHUB_OUTPUT
 
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ steps.timestamp.outputs.timestamp }}
-          release_name: Release ${{ steps.timestamp.outputs.timestamp }}
-          draft: false
-          prerelease: false
+      # Modern method using GitHub CLI
+      - name: Create release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./zuydfacilitymanagement-${{ steps.timestamp.outputs.timestamp }}.zip
-          asset_name: zuydfacilitymanagement-${{ steps.timestamp.outputs.timestamp }}.zip
-          asset_content_type: application/zip
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.ts.outputs.timestamp }}" \
+            "${{ steps.ts.outputs.zip_name }}" \
+            --title "Release ${{ steps.ts.outputs.timestamp }}" \
+            --notes "Automated release"
