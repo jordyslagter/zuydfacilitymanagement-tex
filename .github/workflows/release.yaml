@@ -1,0 +1,50 @@
+name: release_document_template
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "zuydfacilitymanagement"
+
+permissions:
+  contents: write # Needed to create release
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set timestamp
+        id: timestamp
+        run: |
+          TIMESTAMP=$(date +'%Y%m%d%H%M%S')
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+
+      - name: Zip zuydfacilitymanagement
+        run: |
+          DIR="zuydfacilitymanagement"
+          ZIP_NAME="${DIR}-${{ steps.timestamp.outputs.timestamp }}.zip"
+          zip -r "$ZIP_NAME" "$DIR"
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.timestamp.outputs.timestamp }}
+          release_name: Release ${{ steps.timestamp.outputs.timestamp }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./zuydfacilitymanagement-${{ steps.timestamp.outputs.timestamp }}.zip
+          asset_name: zuydfacilitymanagement-${{ steps.timestamp.outputs.timestamp }}.zip
+          asset_content_type: application/zip
