@@ -51,6 +51,8 @@ scoop install miktex
 Navigate to the official [Overleaf](https://overleaf.com) or a self-hosted
 version and create a new blank project.
 
+You must use the [local fonts](#local) with Overleaf.
+
 ### Avenir Next LT Pro font
 
 The Avenir Next LT Pro font is property of Microsoft and thus cannot be
@@ -61,7 +63,29 @@ Otherwise, well, I certainly would never endorse going to
 [duckduckgo](https://duckduckgo.com) and typing in the prompt
 'Avenir LT Pro font free'. I would never. Do you think I'm some kind of cowboy?
 
+#### System
+
 Make sure you have regular, bold and italic installed and available.
+
+#### Local
+
+Pass the `fontslocal` option to the class like this:
+
+```tex
+\documentclass[fontslocal]{zuydfacilitymanagement}
+```
+
+Then, put the fonts here with these _exact names_:
+
+```
+- main.tex
+- fonts
+    - AvenirNextLTPro-Regular
+    - AvenirNextLTPro-Bold
+    - AvenirNextLTPro-It
+```
+
+Now the document will use these instead of the system wide font registry.
 
 ## Downloading the document template
 

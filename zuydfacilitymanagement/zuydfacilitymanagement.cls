@@ -5,6 +5,9 @@
 
 \ProvidesClass{zuydfacilitymanagement}
 
+\newif\ifzfm@fontslocal
+\DeclareOption{fontslocal}{\zfm@fontslocaltrue}
+
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions\relax
 \LoadClass[a4paper, oneside, 11pt]{book}
@@ -39,10 +42,30 @@
 
 \ifXeTeX
   \RequirePackage{fontspec}
-  \setmainfont{Avenir Next LT Pro}
+  \ifzfm@fontslocal
+    \defaultfontfeatures{Path = ./fonts/ }
+    \setmainfont{AvenirNextLTPro}[
+      Path=./fonts/,
+      UprightFont = *-Regular,
+      BoldFont    = *-Bold,
+      ItalicFont  = *-It,
+    ]
+  \else
+    \setmainfont{Avenir Next LT Pro}
+  \fi
 \else\ifLuaTeX
   \RequirePackage{fontspec}
-  \setmainfont{Avenir Next LT Pro}
+  \ifzfm@fontslocal
+    \defaultfontfeatures{Path = ./fonts/ }
+    \setmainfont{AvenirNextLTPro}[
+      Path=./fonts/,
+      UprightFont = *-Regular,
+      BoldFont    = *-Bold,
+      ItalicFont  = *-It,
+    ]
+  \else
+    \setmainfont{Avenir Next LT Pro}
+  \fi
 \else
   \PackageError{circulaireimpact}{
     This class requires XeLaTeX or LuaLaTeX
