@@ -28,7 +28,13 @@ jobs:
         run: |
           DIR="zuydfacilitymanagement"
           ZIP_NAME="${DIR}-${{ steps.ts.outputs.value }}.zip"
-          zip -r "$ZIP_NAME" "$DIR"
+
+          cd "$DIR"
+
+          # Zip *contents* of the zuydfacilitymanagement directory + the
+          # LICENSE from repo root
+          zip -r "../$ZIP_NAME" . ../LICENSE
+
           echo "name=$ZIP_NAME" >> $GITHUB_OUTPUT
 
       - name: Create Release
