@@ -16,6 +16,14 @@
 \RequirePackage[dutch]{babel}
 \RequirePackage[hidelinks]{hyperref}
 
+% set up book-style alignment
+\RequirePackage{microtype}
+% prefer stretching over overfilling
+\setlength{\emergencystretch}{2em}
+\tolerance=1000
+% allow the end of a paragraph to be left aligned
+\setlength{\parfillskip}{0pt plus 2fil}
+
 % ------------------------------------------------------------------------------
 % Set correct options
 % ------------------------------------------------------------------------------
