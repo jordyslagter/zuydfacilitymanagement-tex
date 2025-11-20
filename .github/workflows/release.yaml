@@ -29,11 +29,9 @@ jobs:
           DIR="zuydfacilitymanagement"
           ZIP_NAME="${DIR}-${{ steps.ts.outputs.value }}.zip"
 
-          cd "$DIR"
+          cp LICENSE "$DIR/"
 
-          # Zip *contents* of the zuydfacilitymanagement directory + the
-          # LICENSE from repo root
-          zip -r "../$ZIP_NAME" . ../LICENSE
+          zip -r "$ZIP_NAME" "$DIR"
 
           echo "name=$ZIP_NAME" >> $GITHUB_OUTPUT
 
