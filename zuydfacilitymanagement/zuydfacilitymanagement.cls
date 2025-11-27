@@ -16,14 +16,6 @@
 \RequirePackage[dutch]{babel}
 \RequirePackage[hidelinks]{hyperref}
 
-% set up book-style alignment
-\RequirePackage{microtype}
-% prefer stretching over overfilling
-\setlength{\emergencystretch}{2em}
-\tolerance=1000
-% allow the end of a paragraph to be left aligned
-\setlength{\parfillskip}{0pt plus 2fil}
-
 % ------------------------------------------------------------------------------
 % Set correct options
 % ------------------------------------------------------------------------------
@@ -79,6 +71,15 @@
     This class requires XeLaTeX or LuaLaTeX
   }{Please compile with xelatex or lualatex.}
 \fi\fi
+
+% set up book-style alignment, has to be here otherwise local fonts won't work
+% anymore
+\RequirePackage{microtype}
+% prefer stretching over overfilling
+\setlength{\emergencystretch}{2em}
+\tolerance=1000
+% allow the end of a paragraph to be left aligned
+\setlength{\parfillskip}{0pt plus 2fil}
 
 % ------------------------------------------------------------------------------
 % Cover and title page
